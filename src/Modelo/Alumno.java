@@ -11,6 +11,7 @@ public class Alumno {
     public Alumno(String nombre, String apellido){
         this.nombre = nombre;
         this.apellido = apellido;
+        this.cursadas = new LinkedList<Cursada>();
     }
 
     public void inscribirEn(Cursada cursada){

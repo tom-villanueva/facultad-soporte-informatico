@@ -12,10 +12,20 @@ public class Carrera {
 
     public Carrera(String nombre) {
         this.nombre = nombre;
+        this.alumnos = new LinkedList<Alumno>();
     }
 
     public void agregarAlumno(Alumno alumno) {
         this.alumnos.add(alumno);
+    }
+
+    @Override
+    public String toString() {
+        return "Carrera{" +
+                "nombre='" + nombre + '\'' +
+                ", plan=" + plan +
+                ", alumnos=" + alumnos +
+                '}';
     }
 
     //getters y setters

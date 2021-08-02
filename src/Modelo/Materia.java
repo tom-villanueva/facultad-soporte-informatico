@@ -7,6 +7,7 @@ public class Materia {
     private String nombre;
     private boolean obligatoria;
     private boolean promocionable;
+    private Integer numeroCuatrimestre;
 
     private LinkedList<Materia> correlativas;
 
@@ -14,15 +15,30 @@ public class Materia {
         this.nombre = nombre;
         this.obligatoria = obligatoria;
         this.promocionable = promocionable;
+        this.correlativas = new LinkedList<Materia>();
     }
 
-    public void agregarCorrelativa(Materia materia) {
-        correlativas.add(materia);
+    public void agregarCorrelativa(Materia materia) throws Exception {
+        if(this.numeroCuatrimestre > materia.getNumeroCuatrimestre()){
+            correlativas.add(materia);
+        }
+        else {
+            throw new Exception("La materia no puede ser correlativa");
+        }
+    }
+
+    @Override
+    public String toString() {
+        return nombre;
     }
 
     //getters y setters
     public String getNombre() {
         return nombre;
+    }
+
+    public void setCorrelativas(LinkedList<Materia> correlativas) {
+        this.correlativas = correlativas;
     }
 
     public void setNombre(String nombre) {
@@ -49,4 +65,11 @@ public class Materia {
         return correlativas;
     }
 
+    public Integer getNumeroCuatrimestre() {
+        return numeroCuatrimestre;
+    }
+
+    public void setNumeroCuatrimestre(Integer numeroCuatrimestre) {
+        this.numeroCuatrimestre = numeroCuatrimestre;
+    }
 }
