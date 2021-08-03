@@ -4,7 +4,7 @@ public class Cargador {
 
     public Cargador(){}
 
-    public Facultad crearFacultadEstatica() {
+    /*public Facultad crearFacultadEstatica() {
 
         Facultad facultad = new Facultad();
         Carrera carrera = new Carrera("Lic. en Sistemas");
@@ -55,5 +55,5 @@ public class Cargador {
 
         System.out.println(carrera);
         return facultad;
-    }
+    }*/
 }

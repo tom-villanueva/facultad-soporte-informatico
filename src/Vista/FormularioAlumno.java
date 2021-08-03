@@ -18,6 +18,7 @@ public class FormularioAlumno extends JPanel {
 
     public FormularioAlumno(ProgressListener listener, Facultad facultad) {
         JPanel panel = this;
+        panel.setBorder(BorderFactory.createTitledBorder("Agregar Alumno"));
         this.nombreLabel = new JLabel("Nombre:");
         this.nombreField = new JTextField(10);
         this.apellidoLabel = new JLabel("apellido:");

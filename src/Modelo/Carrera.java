@@ -10,8 +10,7 @@ public class Carrera {
     private PlanDeEstudio plan;
     private LinkedList<Alumno> alumnos;
 
-    public Carrera(String nombre) {
-        this.nombre = nombre;
+    public Carrera() {
         this.alumnos = new LinkedList<Alumno>();
     }
 

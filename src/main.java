@@ -1,7 +1,7 @@
 import Modelo.*;
 
 public class main {
-    public Facultad crearFacultadEstatica() {
+    /*public Facultad crearFacultadEstatica() {
         Facultad facultad = new Facultad();
         Carrera carrera = new Carrera("Lic. en Sistemas");
         Alumno alumno1 = new Alumno("Tomas", "Villanueva");
@@ -51,5 +51,5 @@ public class main {
 
         System.out.println(carrera);
         return facultad;
-    }
+    }*/
 }
