@@ -8,13 +8,15 @@ public class Cursada {
     private EstadoCursada estado;
 
     public Cursada (Materia materia) {
+        notaFinal = 0;
+        notaParcial = 0;
         this.materia = materia;
-        this.estado = EstadoCursada.EN_CURSO;
+        estado = EstadoCursada.EN_CURSO;
     }
 
     public boolean aprobarMateria() {
         if(this.materia.isPromocionable()){
-            if(this.notaParcial >= 4) {
+            if(this.notaParcial >= 4 || this.notaFinal >= 4) {
                 this.setEstado(EstadoCursada.APROBADA);
                 return true;
             }
@@ -37,6 +39,14 @@ public class Cursada {
     }
 
     //getters y setters
+    public Materia getMateria() {
+        return materia;
+    }
+
+    public void setMateria(Materia materia) {
+        this.materia = materia;
+    }
+
     public Integer getNotaParcial() {
         return notaParcial;
     }

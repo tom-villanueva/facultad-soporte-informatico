@@ -35,8 +35,34 @@ public class Alumno {
         this.apellido = apellido;
     }
 
-    public LinkedList getCursadas() {
+    public LinkedList<Cursada> getCursadas() {
         return cursadas;
     }
 
+    public LinkedList<Materia> getMateriasAprobadas() {
+        LinkedList<Materia> res = new LinkedList<>();
+
+        for (Cursada cursada : cursadas) {
+            if(cursada.getEstado() == EstadoCursada.APROBADA) {
+                res.add(cursada.getMateria());
+            }
+        }
+        return res;
+    }
+
+    public LinkedList<Materia> getMateriasCursadaAprobada() {
+        LinkedList<Materia> res = new LinkedList<>();
+
+        for (Cursada cursada : cursadas) {
+            if(cursada.getEstado() == EstadoCursada.CURSADA_APROBADA) {
+                res.add(cursada.getMateria());
+            }
+        }
+        return res;
+    }
+
+    @Override
+    public String toString() {
+        return nombre +" "+ apellido;
+    }
 }

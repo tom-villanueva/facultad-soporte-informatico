@@ -1,11 +1,77 @@
 package Modelo;
 
-import java.util.LinkedList;
-import java.util.TreeMap;
+import java.util.*;
 
-public class PlanC implements TipoDePlan{
+/* Plan C: aprobó las cursadas de las correlativas y los finales de todas las materias de 5 cuatrimestres previos al que se quiere anotar */
+public class PlanC extends TipoDePlan{
     @Override
-    public LinkedList<Materia> verMaterias(Alumno alumno, TreeMap<Integer, Cuatrimestre> cuatrimestres) {
-        return null;
+    public LinkedList<Materia> verMaterias(Alumno alumno, PlanDeEstudio plan) {
+        LinkedList<Materia> cursadas = alumno.getMateriasCursadaAprobada();
+        cursadas.addAll(alumno.getMateriasAprobadas());
+
+        LinkedList<Materia> materias = plan.getMaterias();
+        LinkedList<Materia> correlativas;
+
+        LinkedList<Materia> sinCorrelativas = new LinkedList<>();
+        LinkedList<Materia> posiblesMaterias = new LinkedList<>();
+
+        for (Materia materia : materias) {
+
+            //si la materia no está aprobada
+            if(!(cursadas.contains(materia))) {
+                correlativas = materia.getCorrelativas();
+
+                //Si la materia no tiene correlativas las agrego para luego verificar
+                if(correlativas.size() == 0) {
+                    sinCorrelativas.add(materia);
+                } else {
+                    /*
+                     * (..."aprobó las cursadas de las correlativas")
+                     * */
+                    Set<Materia> interseccion = getInterseccion(correlativas, cursadas);
+
+                    if(interseccion.containsAll(correlativas)) {
+                        posiblesMaterias.add(materia);
+                    }
+                }
+            }
+        }
+
+        /*
+         * Para cada materia que no tiene correlativas
+         * se tienen que haber aprobado los finales de TODAS las materias de 5
+         * cuatrimestres previos.
+         **/
+
+        for(Materia materia : sinCorrelativas) {
+
+            int desde = materia.getNumeroCuatrimestre() - 5;
+            int hasta = materia.getNumeroCuatrimestre();
+
+            if(desde < 0) {
+                desde = 1;
+            }
+
+            SortedMap<Integer, Cuatrimestre> cuatrisAnteriores = plan.obtenerCuatrimestresRango(desde, hasta);
+            LinkedList<Materia> materiasAnteriores = getMateriasCuatrimestres(cuatrisAnteriores);
+
+            Set<Materia> interseccion = getInterseccion(materiasAnteriores, cursadas);
+
+            if(interseccion.containsAll(materiasAnteriores)) {
+                posiblesMaterias.add(materia);
+            }
+        }
+
+        return posiblesMaterias;
+    }
+
+    private LinkedList<Materia> getMateriasCuatrimestres(SortedMap<Integer, Cuatrimestre> cuatrisAnteriores) {
+        LinkedList<Materia> materias = new LinkedList<>();
+
+        for (Integer num : cuatrisAnteriores.keySet()) {
+            materias.addAll(cuatrisAnteriores.get(num).getMaterias());
+        }
+
+        return materias;
     }
 }

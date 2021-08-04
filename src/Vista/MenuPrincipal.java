@@ -19,6 +19,7 @@ public class MenuPrincipal implements Runnable, ProgressListener{
     private JFrame frame;
     private JPanel formularioAlumno;
     private JPanel formularioCarrera;
+    private FormularioAlumnoMateria formularioAlumnoMateria;
 
     private Facultad facultad;
     private JPanel panelContenedor;
@@ -26,13 +27,14 @@ public class MenuPrincipal implements Runnable, ProgressListener{
 
     public MenuPrincipal() {
 
-        this.frame = new JFrame("MenuPrincipal");
-        this.facultad = new Facultad();
+        frame = new JFrame("MenuPrincipal");
+        facultad = new Facultad();
 
         panelBotones = new JPanel();
-        this.mainPanel = new JPanel(new BorderLayout());
-        this.formularioAlumno = new FormularioAlumno(this, facultad);
-        this.formularioCarrera = new FormularioCarrera(this, facultad);
+        mainPanel = new JPanel(new BorderLayout());
+        formularioAlumno = new FormularioAlumno(this, facultad);
+        formularioCarrera = new FormularioCarrera(this, facultad);
+        formularioAlumnoMateria = new FormularioAlumnoMateria(facultad);
 
         //Inicializar panel contenedor de cartas
         panelContenedor = new JPanel();
@@ -41,6 +43,7 @@ public class MenuPrincipal implements Runnable, ProgressListener{
 
         panelContenedor.add(formularioAlumno, "FormularioAlumno");
         panelContenedor.add(formularioCarrera, "FormularioCarrera");
+        panelContenedor.add(formularioAlumnoMateria, "FormularioAlumnoMateria");
 
         this.instanciarBotones();
     }
@@ -56,8 +59,6 @@ public class MenuPrincipal implements Runnable, ProgressListener{
             @Override
             public void actionPerformed(ActionEvent e) {
                 carta.show(panelContenedor, "FormularioAlumno");
-                //frame.setContentPane(formularioAlumno);
-                //frame.pack();
             }
         });
 
@@ -65,8 +66,14 @@ public class MenuPrincipal implements Runnable, ProgressListener{
             @Override
             public void actionPerformed(ActionEvent e) {
                 carta.show(panelContenedor, "FormularioCarrera");
-                //frame.setContentPane(formularioCarrera);
-                //frame.pack();
+            }
+        });
+
+        inscribirAlumnoAMateriaButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                formularioAlumnoMateria.actualizarCarreraComboBoxModel();
+                carta.show(panelContenedor, "FormularioAlumnoMateria");
             }
         });
     }

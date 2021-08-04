@@ -112,6 +112,7 @@ public class FormularioMateria extends JPanel {
         }
     }
 
+    //Inicializa los componentes del panel de correlativas
     private void inicializarPanelCorrelativa() {
         panelCorrelativa = new JPanel(new BorderLayout());
         JPanel panelFormulario = new JPanel();
@@ -136,6 +137,7 @@ public class FormularioMateria extends JPanel {
         panelCorrelativa.add(scrollPaneCorrelativa, BorderLayout.CENTER);
     }
 
+    //Inicializa los componentes del panel de datos de la materia
     private void inicializarPanelFormulario() {
         panelFormulario = new JPanel(new BorderLayout());
         JPanel panelNombre = new JPanel();
@@ -236,7 +238,7 @@ public class FormularioMateria extends JPanel {
                         }
                     }
                     case 1 -> {
-                        System.out.println("se cancelo creacion de cuatrimestre");
+                        System.out.println("se cancelo creacion de materia");
                         JOptionPane.showMessageDialog(panel, "No se agrega materia");
                     }
                 }

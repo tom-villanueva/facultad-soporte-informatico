@@ -1,6 +1,7 @@
 package Modelo;
 
 import java.util.LinkedList;
+import java.util.Objects;
 
 public class Materia {
 
@@ -10,6 +11,19 @@ public class Materia {
     private Integer numeroCuatrimestre;
 
     private LinkedList<Materia> correlativas;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Materia materia = (Materia) o;
+        return obligatoria == materia.obligatoria && promocionable == materia.promocionable && nombre.equals(materia.nombre) && numeroCuatrimestre.equals(materia.numeroCuatrimestre) && correlativas.equals(materia.correlativas);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(nombre, obligatoria, promocionable, numeroCuatrimestre, correlativas);
+    }
 
     public Materia (String nombre, boolean obligatoria, boolean promocionable) {
         this.nombre = nombre;

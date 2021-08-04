@@ -57,6 +57,7 @@ public class FormularioCarrera extends JPanel implements ProgressListener{
                         JOptionPane.showMessageDialog(panel, "Cancelado");
                         break;
                 }
+                System.out.println(carrera);
                 cleanUp();
                 listener.volver();
             }
