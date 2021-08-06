@@ -1,55 +1,53 @@
 package Vista;
 
-import Modelo.*;
+import Modelo.Alumno;
+import Modelo.Carrera;
+import Modelo.Facultad;
 
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class FormularioAlumnoMateria extends JPanel {
+public class FormularioAlumnoCarrera extends JPanel {
 
-    private JPanel panel;
+    JPanel panel;
     private JPanel panelComboBox;
-    private JPanel panelFormulario;
+    private JPanel panelBotones;
 
     private JLabel carreraLabel;
     private JLabel alumnosLabel;
+    private JLabel carreraSeleccionadaLabel;
     private JLabel alumnoSeleccionadoLabel;
-    private JLabel alumnoLabel;
-    private JLabel materiasLabel;
+    private JLabel inscribirLabel;
 
     private JComboBox<Carrera> carreraComboBox;
     private JComboBox<Alumno> alumnoComboBox;
-    private JComboBox<Materia> materiaComboBox;
 
     private DefaultComboBoxModel<Carrera> carreraModel;
     private DefaultComboBoxModel<Alumno> alumnoModel;
-    private DefaultComboBoxModel<Materia> materiaModel;
 
     private JButton aceptarButton;
 
     private Facultad facultad;
-    private Alumno alumnoSeleccionado;
     private Carrera carreraSeleccionada;
-    private Materia materiaSeleccionada;
+    private Alumno alumnoSeleccionado;
 
-    public FormularioAlumnoMateria(Facultad facultad) {
+    public FormularioAlumnoCarrera(Facultad facultad) {
         panel = this;
-        this.setLayout(new BorderLayout());
+        panel.setLayout(new BorderLayout());
         this.facultad = facultad;
 
+        inicializarPanelBotones();
         inicializarPanelComboBox();
-        inicializarPanelFormulario();
 
         panel.add(panelComboBox, BorderLayout.PAGE_START);
-        panel.add(panelFormulario, BorderLayout.CENTER);
+        panel.add(panelBotones, BorderLayout.CENTER);
     }
 
-    private void initCarreraComboBoxModel() {
-        carreraModel.addAll(facultad.getCarreras());
+    public void actualizarAlumnoComboBoxModel() {
+        alumnoModel.removeAllElements();
+        alumnoModel.addAll(facultad.getAlumnos());
     }
 
     public void actualizarCarreraComboBoxModel() {
@@ -57,14 +55,12 @@ public class FormularioAlumnoMateria extends JPanel {
         carreraModel.addAll(facultad.getCarreras());
     }
 
-    private void cargarAlumnosComboBoxModel() {
-        alumnoModel.removeAllElements();
-        alumnoModel.addAll(carreraSeleccionada.getAlumnos());
+    private void initCarreraComboBoxModel() {
+        carreraModel.addAll(facultad.getCarreras());
     }
 
-    private void cargarMateriasComboBoxModel() {
-        materiaModel.removeAllElements();
-        materiaModel.addAll(carreraSeleccionada.getPlan().verMaterias(alumnoSeleccionado));
+    private void initAlumnosModel() {
+        alumnoModel.addAll(facultad.getAlumnos());
     }
 
     private void inicializarPanelComboBox() {
@@ -79,6 +75,7 @@ public class FormularioAlumnoMateria extends JPanel {
 
         alumnoComboBox = new JComboBox<>();
         alumnoModel = new DefaultComboBoxModel<>();
+        initAlumnosModel();
         alumnoComboBox.setModel(alumnoModel);
 
         panelComboBox.add(carreraLabel);
@@ -90,7 +87,9 @@ public class FormularioAlumnoMateria extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 carreraSeleccionada = (Carrera) carreraComboBox.getSelectedItem();
-                cargarAlumnosComboBoxModel();
+                if(carreraSeleccionada != null) {
+                    carreraSeleccionadaLabel.setText(carreraSeleccionada.getNombre());
+                }
             }
         });
 
@@ -100,63 +99,48 @@ public class FormularioAlumnoMateria extends JPanel {
                 alumnoSeleccionado = (Alumno) alumnoComboBox.getSelectedItem();
                 if(alumnoSeleccionado != null) {
                     alumnoSeleccionadoLabel.setText(alumnoSeleccionado.toString());
-                    cargarMateriasComboBoxModel();
                 }
             }
         });
     }
 
-    private void inicializarPanelFormulario() {
-        panelFormulario = new JPanel(new BorderLayout());
-        JPanel panelStart = new JPanel();
-        JPanel panelCenter = new JPanel();
+    private void inicializarPanelBotones() {
+        JPanel labelPanel = new JPanel();
+        panelBotones = new JPanel(new BorderLayout());
 
-        alumnoLabel = new JLabel("Alumno Seleccionado:");
+        inscribirLabel = new JLabel("Inscribir a");
+        JLabel enLabel = new JLabel("en");
         alumnoSeleccionadoLabel = new JLabel();
-        materiasLabel = new JLabel("Materias posibles:");
+        carreraSeleccionadaLabel = new JLabel();
+        aceptarButton = new JButton("Inscribir");
 
-        materiaComboBox = new JComboBox<>();
-        materiaModel = new DefaultComboBoxModel<>();
-        materiaComboBox.setModel(materiaModel);
+        labelPanel.add(inscribirLabel);
+        labelPanel.add(alumnoSeleccionadoLabel);
+        labelPanel.add(enLabel);
+        labelPanel.add(carreraSeleccionadaLabel);
 
-        aceptarButton = new JButton("inscribir");
-
-        panelStart.add(alumnoLabel);
-        panelStart.add(alumnoSeleccionadoLabel);
-
-        panelCenter.add(materiasLabel);
-        panelCenter.add(materiaComboBox);
-
-        panelFormulario.add(panelStart, BorderLayout.PAGE_START);
-        panelFormulario.add(panelCenter, BorderLayout.CENTER);
-        panelFormulario.add(aceptarButton, BorderLayout.PAGE_END);
-
-        materiaComboBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                materiaSeleccionada = (Materia) materiaComboBox.getSelectedItem();
-            }
-        });
+        panelBotones.add(labelPanel,  BorderLayout.PAGE_START);
+        panelBotones.add(aceptarButton, BorderLayout.PAGE_END);
 
         aceptarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int respuesta = JOptionPane.showConfirmDialog(panel, "Confirmar", "Confirmar inscripción de alumno", JOptionPane.YES_NO_OPTION,
                         JOptionPane.INFORMATION_MESSAGE);
-
-                switch(respuesta) {
-                    case 0:
-                        if(materiaSeleccionada != null) {
-                            Cursada cursada = new Cursada(materiaSeleccionada);
-                            alumnoSeleccionado.inscribirEn(cursada);
-                            JOptionPane.showMessageDialog(panel, "Inscripto alumno en materia");
+                switch (respuesta) {
+                    case 0 -> {
+                        if (!(carreraSeleccionada.getAlumnos().contains(alumnoSeleccionado))) {
+                            carreraSeleccionada.agregarAlumno(alumnoSeleccionado);
+                            JOptionPane.showMessageDialog(panel, "Inscripto alumno " + alumnoSeleccionado.toString() + " en " + carreraSeleccionada.getNombre());
                             cleanUp();
+                        } else {
+                            JOptionPane.showMessageDialog(panel, "Alumno ya inscripto");
                         }
-                        break;
-                    case 1:
-                        JOptionPane.showMessageDialog(panel, "Cancelada inscripción");
+                    }
+                    case 1 -> {
+                        JOptionPane.showMessageDialog(panel, "Cancelada inscripción de alumno");
                         cleanUp();
-                        break;
+                    }
                 }
             }
         });
@@ -164,8 +148,8 @@ public class FormularioAlumnoMateria extends JPanel {
 
     private void cleanUp() {
         carreraComboBox.setSelectedIndex(0);
-        alumnoComboBox.removeAll();
-        materiaComboBox.removeAll();
+        alumnoComboBox.setSelectedIndex(0);
+        carreraSeleccionadaLabel.setText("");
         alumnoSeleccionadoLabel.setText("");
     }
 

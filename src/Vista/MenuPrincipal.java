@@ -20,6 +20,7 @@ public class MenuPrincipal implements Runnable, ProgressListener{
     private JPanel formularioAlumno;
     private JPanel formularioCarrera;
     private FormularioAlumnoMateria formularioAlumnoMateria;
+    private FormularioAlumnoCarrera formularioAlumnoCarrera;
 
     private Facultad facultad;
     private JPanel panelContenedor;
@@ -35,6 +36,7 @@ public class MenuPrincipal implements Runnable, ProgressListener{
         formularioAlumno = new FormularioAlumno(this, facultad);
         formularioCarrera = new FormularioCarrera(this, facultad);
         formularioAlumnoMateria = new FormularioAlumnoMateria(facultad);
+        formularioAlumnoCarrera = new FormularioAlumnoCarrera(facultad);
 
         //Inicializar panel contenedor de cartas
         panelContenedor = new JPanel();
@@ -44,6 +46,7 @@ public class MenuPrincipal implements Runnable, ProgressListener{
         panelContenedor.add(formularioAlumno, "FormularioAlumno");
         panelContenedor.add(formularioCarrera, "FormularioCarrera");
         panelContenedor.add(formularioAlumnoMateria, "FormularioAlumnoMateria");
+        panelContenedor.add(formularioAlumnoCarrera, "FormularioAlumnoCarrera");
 
         this.instanciarBotones();
     }
@@ -74,6 +77,15 @@ public class MenuPrincipal implements Runnable, ProgressListener{
             public void actionPerformed(ActionEvent e) {
                 formularioAlumnoMateria.actualizarCarreraComboBoxModel();
                 carta.show(panelContenedor, "FormularioAlumnoMateria");
+            }
+        });
+
+        inscribirAlumnoACarreraButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                formularioAlumnoCarrera.actualizarAlumnoComboBoxModel();
+                formularioAlumnoCarrera.actualizarCarreraComboBoxModel();
+                carta.show(panelContenedor, "FormularioAlumnoCarrera");
             }
         });
     }

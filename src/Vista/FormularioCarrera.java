@@ -5,19 +5,24 @@ import Modelo.Facultad;
 import Modelo.PlanDeEstudio;
 
 import javax.swing.*;
+import javax.swing.text.NumberFormatter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.NumberFormat;
 
 public class FormularioCarrera extends JPanel implements ProgressListener{
     private JLabel nombreLabel;
     private JTextField nombreField;
+    private JLabel cantidadOptativasLabel;
+    private JFormattedTextField cantidadOptativasField;
     private JButton agregarPlanButton;
     private JButton aceptarButton;
     private ProgressListener listener;
     private FormularioPlan planPanel;
 
     private Carrera carrera;
+    private NumberFormatter formatter;
 
     public FormularioCarrera(ProgressListener listener, Facultad facultad) {
         carrera = new Carrera();
@@ -28,6 +33,19 @@ public class FormularioCarrera extends JPanel implements ProgressListener{
         planPanel.setVisible(false);
         nombreLabel = new JLabel("Nombre:");
         nombreField = new JTextField(10);
+        cantidadOptativasLabel = new JLabel("Cantidad optativas:");
+
+        //Codigo para el formateado
+        NumberFormat format = NumberFormat.getInstance();
+        formatter = new NumberFormatter(format);
+        formatter.setValueClass(Integer.class);
+        formatter.setMinimum(0);
+        formatter.setAllowsInvalid(false);
+        formatter.setCommitsOnValidEdit(true);
+        cantidadOptativasField = new JFormattedTextField(formatter);
+        cantidadOptativasField.setColumns(10);
+        cantidadOptativasField.setEnabled(false);
+
         agregarPlanButton = new JButton("Editar plan de estudio");
         aceptarButton = new JButton("Aceptar carrera");
         this.listener = listener;
@@ -39,7 +57,6 @@ public class FormularioCarrera extends JPanel implements ProgressListener{
             public void actionPerformed(ActionEvent e) {
                 String nombre = nombreField.getText();
                 carrera.setNombre(nombre);
-                //carrera.setCantidadOptativas();
 
                 int respuesta = JOptionPane.showConfirmDialog(panel, "Confirmar", "Confirmar creación de carrera", JOptionPane.YES_NO_OPTION,
                         JOptionPane.INFORMATION_MESSAGE);
@@ -89,6 +106,9 @@ public class FormularioCarrera extends JPanel implements ProgressListener{
         panelFormulario.add(nombreLabel);
         panelFormulario.add(nombreField);
         panelFormulario.add(agregarPlanButton);
+        panelFormulario.add(cantidadOptativasLabel);
+        panelFormulario.add(cantidadOptativasField);
+
         this.add(panelFormulario, BorderLayout.PAGE_START);
         this.add(planPanel, BorderLayout.CENTER);
         this.add(aceptarButton, BorderLayout.PAGE_END);
@@ -103,5 +123,9 @@ public class FormularioCarrera extends JPanel implements ProgressListener{
     public void volver() {
         agregarPlanButton.setEnabled(true);
         aceptarButton.setEnabled(true);
+
+        carrera.setCantidadOptativas();
+        formatter.setMaximum(carrera.getCantidadOptativas());
+        cantidadOptativasField.setEnabled(true);
     }
 }

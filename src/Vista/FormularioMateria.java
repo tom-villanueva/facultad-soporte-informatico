@@ -232,6 +232,7 @@ public class FormularioMateria extends JPanel {
                             obligatoriaButton.setSelected(true);
                             noPromocionableButton.setSelected(true);
                             popularMateriaTable(materia);
+                            correlativaComboBox.setSelectedIndex(0);
                             JOptionPane.showMessageDialog(panel, "Materia agregada");
                         } else {
                             JOptionPane.showMessageDialog(panel, "Materia no tiene nombre");

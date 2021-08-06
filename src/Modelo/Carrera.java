@@ -18,13 +18,13 @@ public class Carrera {
         this.alumnos.add(alumno);
     }
 
+    public void setCantidadOptativas() {
+        cantidadOptativas = plan.calcularCantidadOptativas();
+    }
+
     @Override
     public String toString() {
-        return "Carrera{" +
-                "nombre='" + nombre + '\'' +
-                ", plan=" + plan +
-                ", alumnos=" + alumnos +
-                '}';
+        return nombre;
     }
 
     //getters y setters
