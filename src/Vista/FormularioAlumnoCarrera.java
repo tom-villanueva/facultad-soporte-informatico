@@ -30,10 +30,12 @@ public class FormularioAlumnoCarrera extends JPanel {
     private JButton aceptarButton;
 
     private Facultad facultad;
+    private ProgressListener listener;
     private Carrera carreraSeleccionada;
     private Alumno alumnoSeleccionado;
 
-    public FormularioAlumnoCarrera(Facultad facultad) {
+    public FormularioAlumnoCarrera(ProgressListener listener, Facultad facultad) {
+        this.listener = listener;
         panel = this;
         panel.setLayout(new BorderLayout());
         this.facultad = facultad;
@@ -129,17 +131,27 @@ public class FormularioAlumnoCarrera extends JPanel {
                         JOptionPane.INFORMATION_MESSAGE);
                 switch (respuesta) {
                     case 0 -> {
-                        if (!(carreraSeleccionada.getAlumnos().contains(alumnoSeleccionado))) {
-                            carreraSeleccionada.agregarAlumno(alumnoSeleccionado);
-                            JOptionPane.showMessageDialog(panel, "Inscripto alumno " + alumnoSeleccionado.toString() + " en " + carreraSeleccionada.getNombre());
-                            cleanUp();
+                        if(alumnoSeleccionado != null && carreraSeleccionada != null) {
+                            if (!(carreraSeleccionada.getAlumnos().contains(alumnoSeleccionado)) && alumnoSeleccionado.getCarrera() == null) {
+                                carreraSeleccionada.agregarAlumno(alumnoSeleccionado);
+                                alumnoSeleccionado.setCarrera(carreraSeleccionada);
+                                JOptionPane.showMessageDialog(panel, "Inscripto alumno " + alumnoSeleccionado.toString() + " en " + carreraSeleccionada.getNombre());
+                                cleanUp();
+                                listener.volver();
+                            } else {
+                                JOptionPane.showMessageDialog(panel, "Alumno ya inscripto en/la carrera");
+                                cleanUp();
+                            }
                         } else {
-                            JOptionPane.showMessageDialog(panel, "Alumno ya inscripto");
+                            JOptionPane.showMessageDialog(panel, "Selecciona alumno y carrera");
+                            cleanUp();
                         }
+
                     }
                     case 1 -> {
                         JOptionPane.showMessageDialog(panel, "Cancelada inscripción de alumno");
                         cleanUp();
+                        listener.volver();
                     }
                 }
             }

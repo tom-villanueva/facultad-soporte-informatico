@@ -74,4 +74,9 @@ public class PlanC extends TipoDePlan{
 
         return materias;
     }
+
+    @Override
+    public String toString() {
+        return "C";
+    }
 }

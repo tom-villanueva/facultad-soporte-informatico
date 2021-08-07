@@ -30,12 +30,22 @@ public class Cursada {
         return false;
     }
 
-    public void aprobarCursada() {
-        this.setEstado(EstadoCursada.CURSADA_APROBADA);
+    public boolean aprobarCursada() {
+        if(this.notaParcial >= 4) {
+            this.setEstado(EstadoCursada.APROBADA);
+            return true;
+        } else {
+            return false;
+        }
     }
 
-    public void desaprobarMateria() {
-        this.setEstado(EstadoCursada.DESAPROBADA);
+    public boolean desaprobarMateria() {
+        if(this.notaParcial < 4) {
+            this.setEstado(EstadoCursada.DESAPROBADA);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     //getters y setters

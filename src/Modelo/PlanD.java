@@ -76,4 +76,9 @@ public class PlanD extends TipoDePlan{
 
         return materias;
     }
+
+    @Override
+    public String toString() {
+        return "D";
+    }
 }

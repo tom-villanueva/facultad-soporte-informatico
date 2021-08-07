@@ -32,11 +32,13 @@ public class FormularioAlumnoMateria extends JPanel {
     private JButton aceptarButton;
 
     private Facultad facultad;
+    private ProgressListener listener;
     private Alumno alumnoSeleccionado;
     private Carrera carreraSeleccionada;
     private Materia materiaSeleccionada;
 
-    public FormularioAlumnoMateria(Facultad facultad) {
+    public FormularioAlumnoMateria(ProgressListener listener, Facultad facultad) {
+        this.listener = listener;
         panel = this;
         this.setLayout(new BorderLayout());
         this.facultad = facultad;
@@ -59,7 +61,9 @@ public class FormularioAlumnoMateria extends JPanel {
 
     private void cargarAlumnosComboBoxModel() {
         alumnoModel.removeAllElements();
-        alumnoModel.addAll(carreraSeleccionada.getAlumnos());
+        if(carreraSeleccionada != null) {
+            alumnoModel.addAll(carreraSeleccionada.getAlumnos());
+        }
     }
 
     private void cargarMateriasComboBoxModel() {
@@ -148,14 +152,21 @@ public class FormularioAlumnoMateria extends JPanel {
                     case 0:
                         if(materiaSeleccionada != null) {
                             Cursada cursada = new Cursada(materiaSeleccionada);
-                            alumnoSeleccionado.inscribirEn(cursada);
-                            JOptionPane.showMessageDialog(panel, "Inscripto alumno en materia");
-                            cleanUp();
+                            if(!alumnoSeleccionado.estaInscriptoEn(materiaSeleccionada)) {
+                                alumnoSeleccionado.inscribirEn(cursada);
+                                JOptionPane.showMessageDialog(panel, "Inscripto alumno en materia");
+                                cleanUp();
+                                listener.volver();
+                            } else {
+                                JOptionPane.showMessageDialog(panel, "Alumno ya inscripto en esa materia");
+                                cleanUp();
+                            }
                         }
                         break;
                     case 1:
                         JOptionPane.showMessageDialog(panel, "Cancelada inscripción");
                         cleanUp();
+                        listener.volver();
                         break;
                 }
             }
@@ -164,6 +175,7 @@ public class FormularioAlumnoMateria extends JPanel {
 
     private void cleanUp() {
         carreraComboBox.setSelectedIndex(0);
+        materiaComboBox.setSelectedIndex(0);
         alumnoComboBox.removeAll();
         materiaComboBox.removeAll();
         alumnoSeleccionadoLabel.setText("");

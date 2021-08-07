@@ -39,4 +39,9 @@ public class PlanB extends TipoDePlan {
 
         return  posiblesMaterias;
     }
+
+    @Override
+    public String toString() {
+        return "B";
+    }
 }

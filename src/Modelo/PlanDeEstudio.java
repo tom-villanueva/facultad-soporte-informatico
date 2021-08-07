@@ -1,9 +1,6 @@
 package Modelo;
 
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.SortedMap;
-import java.util.TreeMap;
+import java.util.*;
 
 public class PlanDeEstudio {
 
@@ -75,6 +72,27 @@ public class PlanDeEstudio {
         }
 
         return total;
+    }
+
+    /*
+    * Verifica si un alumno finalizó con el plan de estudios
+    * */
+
+    public boolean alumnoFinalizo(Alumno alumno, int cantidadOptativas) {
+        int cantOptativasAprobadas = 0;
+        LinkedList<Materia> materias = getMaterias();
+        HashSet<Materia> materiasAprobadas = new HashSet<>(alumno.getMateriasAprobadas());
+        HashSet<Materia> materiasTotales = new HashSet<>(materias);
+
+        for(Materia materia : alumno.getMateriasAprobadas()) {
+            if(!materia.isObligatoria()) {
+                cantOptativasAprobadas += 1;
+            }
+        }
+
+        materiasTotales.retainAll(materiasAprobadas);
+
+        return materiasTotales.containsAll(materias) && cantidadOptativas == cantOptativasAprobadas;
     }
 
     @Override

@@ -14,7 +14,6 @@ public class FormularioAlumno extends JPanel {
     private JLabel apellidoLabel;
     private JTextField apellidoField;
     private JButton aceptarButton;
-    private JButton volverButton;
 
     public FormularioAlumno(ProgressListener listener, Facultad facultad) {
         JPanel panel = this;
@@ -24,7 +23,6 @@ public class FormularioAlumno extends JPanel {
         this.apellidoLabel = new JLabel("apellido:");
         this.apellidoField = new JTextField(10);
         this.aceptarButton = new JButton("Aceptar");
-        this.volverButton = new VolverButton(listener);
         setComponents();
 
         aceptarButton.addActionListener(new ActionListener() {
@@ -41,9 +39,11 @@ public class FormularioAlumno extends JPanel {
                     case 0:
                         facultad.agregarAlumno(alumno);
                         JOptionPane.showMessageDialog(panel, "Creado alumno: "+nombre+" "+apellido);
+                        listener.volver();
                         break;
                     case 1:
                         JOptionPane.showMessageDialog(panel, "Cancelado");
+                        listener.volver();
                         break;
                 }
                 cleanUp();
@@ -53,7 +53,6 @@ public class FormularioAlumno extends JPanel {
     }
 
     private void setComponents() {
-        this.add(this.volverButton);
         this.add(this.nombreLabel);
         this.add(this.nombreField);
         this.add(this.apellidoLabel);

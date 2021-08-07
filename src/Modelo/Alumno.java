@@ -7,36 +7,25 @@ public class Alumno {
     private String apellido;
 
     private LinkedList<Cursada> cursadas;
+    private Carrera carrera;
 
     public Alumno(String nombre, String apellido){
         this.nombre = nombre;
         this.apellido = apellido;
-        this.cursadas = new LinkedList<Cursada>();
+        cursadas = new LinkedList<Cursada>();
     }
 
     public void inscribirEn(Cursada cursada){
         cursadas.add(cursada);
     }
 
-    //getters y setters
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getApellido() {
-        return apellido;
-    }
-
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
-    }
-
-    public LinkedList<Cursada> getCursadas() {
-        return cursadas;
+    public boolean estaInscriptoEn(Materia materia) {
+        for (Cursada cursada : cursadas) {
+            if(cursada.getMateria() == materia) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public LinkedList<Materia> getMateriasAprobadas() {
@@ -59,6 +48,36 @@ public class Alumno {
             }
         }
         return res;
+    }
+
+    //getters y setters
+
+    public Carrera getCarrera() {
+        return carrera;
+    }
+
+    public void setCarrera(Carrera carrera) {
+        this.carrera = carrera;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public LinkedList<Cursada> getCursadas() {
+        return cursadas;
     }
 
     @Override

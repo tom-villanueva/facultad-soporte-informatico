@@ -1,8 +1,64 @@
 package Modelo;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.LinkedList;
+import java.util.Objects;
+
 public class Cargador {
 
     public Cargador(){}
+
+    public Carrera cargarMateriasDeArchivo(String nombreCarrera, String fileName){
+        Carrera carrera = new Carrera();
+        carrera.setNombre(nombreCarrera);
+        PlanDeEstudio plan = new PlanDeEstudio();
+        plan.setPlan(new PlanA());
+        carrera.setPlan(plan);
+
+        System.out.println("entre");
+        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+            LinkedList<Materia> materias = new LinkedList<>();
+            Cuatrimestre cuatri =  new Cuatrimestre();
+            plan.agregarCuatrimestre(cuatri);
+
+            String line;
+            while ((line = br.readLine()) != null) {
+
+                String[] values = line.split(",");
+                int num = Integer.parseInt(values[0]);
+                String nombre = values[1];
+                boolean obligatoria = Boolean.parseBoolean(values[2]);
+                boolean promocionable = Boolean.parseBoolean(values[3]);
+
+                if(num != cuatri.getNumero()) {
+                    cuatri = new Cuatrimestre();
+                    plan.agregarCuatrimestre(cuatri);
+                }
+
+                Materia materia = new Materia(nombre, obligatoria, promocionable);
+                cuatri.agregarMateria(materia);
+                materias.add(materia);
+
+                if(!Objects.equals(values[4], "")) {
+                    String[] correlativas = values[4].split(";");
+                    for(String correlativa : correlativas) {
+                        for(Materia materiaC : materias) {
+                            if(materiaC.getNombre().equals(correlativa)){
+                                materia.agregarCorrelativa(materiaC);
+                            }
+                        }
+                    }
+                }
+            }
+        }catch(IOException e){
+            System.out.println(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return carrera;
+    }
 
     public Facultad crearFacultadEstatica() {
 

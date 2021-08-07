@@ -22,6 +22,10 @@ public class Carrera {
         cantidadOptativas = plan.calcularCantidadOptativas();
     }
 
+    public boolean alumnoFinalizo(Alumno alumno) {
+        return plan.alumnoFinalizo(alumno, getCantidadOptativas());
+    }
+
     @Override
     public String toString() {
         return nombre;

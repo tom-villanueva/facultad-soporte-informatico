@@ -71,4 +71,9 @@ public class PlanE extends TipoDePlan{
 
         return posiblesMaterias;
     }
+
+    @Override
+    public String toString() {
+        return "E";
+    }
 }

@@ -21,32 +21,38 @@ public class MenuPrincipal implements Runnable, ProgressListener{
     private JPanel formularioCarrera;
     private FormularioAlumnoMateria formularioAlumnoMateria;
     private FormularioAlumnoCarrera formularioAlumnoCarrera;
+    private VistaPrincipal vistaPrincipal;
+    private FormularioTerminacion formularioTerminacion;
 
     private Facultad facultad;
     private JPanel panelContenedor;
     private CardLayout carta;
 
-    public MenuPrincipal() {
+    public MenuPrincipal(Facultad facultad) {
 
         frame = new JFrame("MenuPrincipal");
-        facultad = new Facultad();
+        this.facultad = facultad;
 
         panelBotones = new JPanel();
         mainPanel = new JPanel(new BorderLayout());
         formularioAlumno = new FormularioAlumno(this, facultad);
         formularioCarrera = new FormularioCarrera(this, facultad);
-        formularioAlumnoMateria = new FormularioAlumnoMateria(facultad);
-        formularioAlumnoCarrera = new FormularioAlumnoCarrera(facultad);
+        formularioAlumnoMateria = new FormularioAlumnoMateria(this, facultad);
+        formularioAlumnoCarrera = new FormularioAlumnoCarrera(this, facultad);
+        vistaPrincipal = new VistaPrincipal(this, facultad);
+        formularioTerminacion = new FormularioTerminacion(this, facultad);
 
         //Inicializar panel contenedor de cartas
         panelContenedor = new JPanel();
         carta = new CardLayout();
         panelContenedor.setLayout(carta);
 
+        panelContenedor.add(vistaPrincipal, "VistaPrincipal");
         panelContenedor.add(formularioAlumno, "FormularioAlumno");
         panelContenedor.add(formularioCarrera, "FormularioCarrera");
         panelContenedor.add(formularioAlumnoMateria, "FormularioAlumnoMateria");
         panelContenedor.add(formularioAlumnoCarrera, "FormularioAlumnoCarrera");
+        panelContenedor.add(formularioTerminacion, "FormularioTerminacion");
 
         this.instanciarBotones();
     }
@@ -88,11 +94,21 @@ public class MenuPrincipal implements Runnable, ProgressListener{
                 carta.show(panelContenedor, "FormularioAlumnoCarrera");
             }
         });
+
+        verTerminacionDeCarreraButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                formularioTerminacion.cargarAlumnosComboBox();
+                carta.show(panelContenedor, "FormularioTerminacion");
+            }
+        });
     }
 
     @Override
     public void volver() {
-        //carta.show(panelContnedor, "PanelInfo");
+        vistaPrincipal.cargarCarrerasTable();
+        vistaPrincipal.cargarAlumnosTable();
+        carta.show(panelContenedor, "VistaPrincipal");
     }
 
     @Override
@@ -118,7 +134,7 @@ public class MenuPrincipal implements Runnable, ProgressListener{
         SwingUtilities.invokeLater(this);
     }
 
-    public static void main(String[] args) {
-        new MenuPrincipal().go();
-    }
+    //public static void main(String[] args) {
+    //    new MenuPrincipal().go();
+    //}
 }

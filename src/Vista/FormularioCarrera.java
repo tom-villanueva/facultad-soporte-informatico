@@ -33,7 +33,7 @@ public class FormularioCarrera extends JPanel implements ProgressListener{
         planPanel.setVisible(false);
         nombreLabel = new JLabel("Nombre:");
         nombreField = new JTextField(10);
-        cantidadOptativasLabel = new JLabel("Cantidad optativas:");
+        cantidadOptativasLabel = new JLabel("Cantidad optativas para aprobar:");
 
         //Codigo para el formateado
         NumberFormat format = NumberFormat.getInstance();
@@ -65,6 +65,7 @@ public class FormularioCarrera extends JPanel implements ProgressListener{
                         if(verificarCarreraCorrecta(carrera)) {
                             facultad.agregarCarrera(carrera);
                             JOptionPane.showMessageDialog(panel, "Creada carrera: "+nombre);
+                            listener.volver();
                         }
                         else {
                             JOptionPane.showMessageDialog(panel, "Falta plan de carrera");
@@ -72,6 +73,7 @@ public class FormularioCarrera extends JPanel implements ProgressListener{
                         break;
                     case 1:
                         JOptionPane.showMessageDialog(panel, "Cancelado");
+                        listener.volver();
                         break;
                 }
                 System.out.println(carrera);
