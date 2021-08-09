@@ -66,11 +66,10 @@ public class FormularioTerminacion extends JPanel {
                 }
                 if(finalizo) {
                     JOptionPane.showMessageDialog(panel, "Finalizo!");
-                    cleanUp();
                 } else {
                     JOptionPane.showMessageDialog(panel, "No finalizo!");
-                    cleanUp();
                 }
+                cleanUp();
             }
         });
     }

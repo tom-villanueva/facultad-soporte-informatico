@@ -8,6 +8,7 @@ public class PlanA extends TipoDePlan{
         // Las materias que aprobó las cursadas, y las que aprobó
         LinkedList<Materia> cursadas = alumno.getMateriasCursadaAprobada();
         cursadas.addAll(alumno.getMateriasAprobadas());
+        cursadas.addAll(alumno.getMateriasEnCurso());
 
         LinkedList<Materia> materias = plan.getMaterias();
         LinkedList<Materia> correlativas;
@@ -15,7 +16,7 @@ public class PlanA extends TipoDePlan{
 
         for (Materia materia : materias) {
 
-            //si la materia no está aprobada/cursada aprobada
+            //Si la materia no está aprobada/cursada aprobada
             if(!(cursadas.contains(materia))) {
                 correlativas = materia.getCorrelativas();
 
@@ -24,8 +25,10 @@ public class PlanA extends TipoDePlan{
                     posiblesMaterias.add(materia);
                 } else {
 
+                    //Intersección entre las correlativas y las materias con cursada aprobadas y aprobadas
                     Set<Materia> interseccion = getInterseccion(correlativas, cursadas);
 
+                    //Si la intersección contiene todas las correlativas, entonces se puede cursar
                     if(interseccion.containsAll(correlativas)) {
                         posiblesMaterias.add(materia);
                     }

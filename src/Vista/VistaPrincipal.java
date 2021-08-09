@@ -57,14 +57,21 @@ public class VistaPrincipal extends JPanel {
         tablaAlumnosModel = (DefaultTableModel) tablaAlumnos.getModel();
 
         tablaAlumnosModel.addColumn("Nombre");
-        tablaAlumnosModel.addColumn("Carrera/s");
+        tablaAlumnosModel.addColumn("Carrera");
     }
 
     public void cargarAlumnosTable() {
         tablaAlumnosModel.setRowCount(0);
 
         for(Alumno alumno : facultad.getAlumnos()) {
-            String[] rowData = {alumno.toString(), String.valueOf(alumno.getCarrera())};
+            String carreraNombre;
+            if(alumno.getCarrera() == null) {
+                carreraNombre = "No inscripto";
+            } else {
+                carreraNombre = String.valueOf(alumno.getCarrera());
+            }
+
+            String[] rowData = {alumno.toString(), carreraNombre};
             tablaAlumnosModel.addRow(rowData);
         }
     }

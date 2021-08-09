@@ -13,6 +13,8 @@ public class PlanB extends TipoDePlan {
         LinkedList<Materia> aprobadas = alumno.getMateriasAprobadas();
         LinkedList<Materia> noCursables = alumno.getMateriasCursadaAprobada();
         noCursables.addAll(aprobadas);
+        noCursables.addAll(alumno.getMateriasEnCurso());
+
         LinkedList<Materia> materias = plan.getMaterias();
         LinkedList<Materia> correlativas;
         LinkedList<Materia> posiblesMaterias = new LinkedList<>();
@@ -28,8 +30,10 @@ public class PlanB extends TipoDePlan {
                     posiblesMaterias.add(materia);
                 } else {
 
+                    //Intersección entre las correlativas y las materias con final aprobado
                     Set<Materia> interseccion = getInterseccion(correlativas, aprobadas);
 
+                    //Si la intersección contiene todas las correlativas, entonces se puede cursar
                     if(interseccion.containsAll(correlativas)) {
                         posiblesMaterias.add(materia);
                     }

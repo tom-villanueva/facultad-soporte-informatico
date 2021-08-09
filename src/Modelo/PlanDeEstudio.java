@@ -9,20 +9,19 @@ public class PlanDeEstudio {
     private TipoDePlan plan;
 
     public PlanDeEstudio() {
-        //this.plan = plan;
         this.cantidadCuatrimestres = 1;
         this.cuatrimestres = new TreeMap<>();
     }
 
     /*
-    * Ver las materias posibles para un alumno según el plan
+    * Ver las materias posibles para un alumno según el plan.
     */
     public LinkedList<Materia> verMaterias(Alumno alumno) {
         return this.plan.verMaterias(alumno, this);
     }
 
     /*
-    * Agrega un cuatrimestre y le asigna un número manejado internamente
+    * Agrega un cuatrimestre y le asigna un número manejado internamente.
     * */
     public void agregarCuatrimestre(Cuatrimestre cuatrimestre) {
         cuatrimestre.setNumero(this.cantidadCuatrimestres);
@@ -31,21 +30,25 @@ public class PlanDeEstudio {
     }
 
     /*
-    * Obtiene los cuatrimestres anteriores a un número de cuatrimestre dado
+    * Obtiene los cuatrimestres anteriores a un número de cuatrimestre dado.
     * */
     public SortedMap<Integer, Cuatrimestre> obtenerCuatrimestresAnteriores(Integer numeroCuatrimestre) {
         return this.cuatrimestres.headMap(numeroCuatrimestre);
     }
 
     /*
-    * Obtiene los cuatrimestres dado un rango numérico
+    * Obtiene los cuatrimestres dado un rango numérico.
     * */
-    public SortedMap<Integer, Cuatrimestre> obtenerCuatrimestresRango(Integer numeroCuatrimestreDesde, Integer numeroCuatrimestreHasta) {
-        return this.cuatrimestres.subMap(numeroCuatrimestreDesde, numeroCuatrimestreHasta);
+    public SortedMap<Integer, Cuatrimestre> obtenerCuatrimestresRango(Integer numeroCuatrimestreDesde, Integer numeroCuatrimestreHasta, boolean inclusivo) {
+        if(inclusivo){
+            return this.cuatrimestres.subMap(numeroCuatrimestreDesde, true, numeroCuatrimestreHasta, true);
+        } else {
+            return this.cuatrimestres.subMap(numeroCuatrimestreDesde, numeroCuatrimestreHasta);
+        }
     }
 
     /*
-    * Obtiene todas las materias de todos los cuatrimestres
+    * Obtiene todas las materias de todos los cuatrimestres.
     * */
     public LinkedList<Materia> getMaterias() {
         Cuatrimestre cuatri;
@@ -60,7 +63,7 @@ public class PlanDeEstudio {
     }
 
     /*
-    * Calcula la cantidad de optativas
+    * Calcula la cantidad de optativas.
     * */
     public int calcularCantidadOptativas() {
         Cuatrimestre cuatri;
@@ -75,7 +78,8 @@ public class PlanDeEstudio {
     }
 
     /*
-    * Verifica si un alumno finalizó con el plan de estudios
+    * Verifica si un alumno finalizó con el plan de estudios.
+    * Hace una intersección entre las materias aprobadas y las totales
     * */
 
     public boolean alumnoFinalizo(Alumno alumno, int cantidadOptativas) {
@@ -84,9 +88,11 @@ public class PlanDeEstudio {
         HashSet<Materia> materiasAprobadas = new HashSet<>(alumno.getMateriasAprobadas());
         HashSet<Materia> materiasTotales = new HashSet<>(materias);
 
-        for(Materia materia : alumno.getMateriasAprobadas()) {
-            if(!materia.isObligatoria()) {
-                cantOptativasAprobadas += 1;
+        if(cantidadOptativas != 0) {
+            for(Materia materia : alumno.getMateriasAprobadas()) {
+                if(!materia.isObligatoria()) {
+                    cantOptativasAprobadas += 1;
+                }
             }
         }
 

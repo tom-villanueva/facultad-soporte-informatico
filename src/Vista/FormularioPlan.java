@@ -162,7 +162,6 @@ public class FormularioPlan extends JPanel implements ProgressListener{
                     }
                     case 1 -> JOptionPane.showMessageDialog(panelMateria, "Cancelar creacion de plan de estudio");
                 }
-                System.out.println(carrera);
             }
         });
     }

@@ -1,20 +1,21 @@
-1,Álgebra,true,false,;
-1,Expresión de Problemas y Algoritmos,true,true,;
-1,Elementos de Informática,true,true,;
-2,Algorítmica y Programación I,true,true,Expresión de Problemas y Algoritmos
-2,Análisis Matemático,true,true,;
-2,Elementos de Lógica y Matemática Discreta,true,true,;
+1,Acreditacion de Idioma Ingles,false,true,;
+1,Algebra,true,false,;
+1,Expresion de Problemas y Algoritmos,true,true,;
+1,Elementos de Informatica,true,true,;
+2,Algoritmica y Programacion I,true,true,Expresion de Problemas y Algoritmos
+2,Analisis Matematico,true,true,;
+2,Elementos de Logica y Matematica Discreta,true,true,;
 3,Sistemas y Organizaciones,true,true,;
-3,Arquitectura de Computadoras,true,false,Elementos de Informática
-3,Algorítmica y Programación II, true, true,Algorítmica y Programación I;Elementos de Lógica y Matemática Discreta
-3,Estadística,true,true,Álgebra;Análisis Matemático
-4,Bases de Datos I,true,true,Algorítmica y Programación II
-4,Programación y Diseño Orientado a Objetos,true,false,Algorítmica y Programación II
-4,Ingeniería de Software I,true,true,Algorítmica y Programación I;Sistemas y Organizaciones
-5,Laboratorio de Programación y Lenguajes,true,true,Bases de Datos I
-5,Fundamentos Teóricos de informática,true,true,Algorítmica y Programación II;Elementos de Lógica y Matemática Discreta
-5,Ingeniería de Software II,true,false,Ingeniería de Software I;Estadística
-5,Introducción a la Concurrencia,true,true,Arquitectura de Computadoras;Algorítmica y Programación II
-6,Sistemas Operativos,true,false,Introducción a la Concurrencia
-6,Laboratorio de Software,true,false,Bases de Datos I;Programación y Diseño Orientado a Objetos;Ingeniería de Software I
+3,Arquitectura de Computadoras,true,false,Elementos de Informatica
+3,Algoritmica y Programacion II, true, false,Algoritmica y Programacion I;Elementos de Logica y Matematica Discreta
+3,Estadistica,true,true,Algebra;Analisis Matematico
+4,Bases de Datos I,true,true,Algoritmica y Programacion II
+4,Programacion y Diseño Orientado a Objetos,true,false,Algoritmica y Programacion II
+4,Ingenieria de Software I,true,true,Algoritmica y Programacion I;Sistemas y Organizaciones
+5,Laboratorio de Programacion y Lenguajes,true,true,Bases de Datos I
+5,Fundamentos Teoricos de informatica,true,true,Algoritmica y Programacion II;Elementos de Logica y Matematica Discreta
+5,Ingenieria de Software II,true,false,Ingenieria de Software I;Estadistica
+5,Introduccion a la Concurrencia,true,true,Arquitectura de Computadoras;Algoritmica y Programacion II
+6,Sistemas Operativos,true,false,Introduccion a la Concurrencia
+6,Laboratorio de Software,true,false,Bases de Datos I;Programacion y Diseño Orientado a Objetos;Ingenieria de Software I
 6,Seminario de Aspectos Legales y Profesionales I,true,true,Sistemas y Organizaciones

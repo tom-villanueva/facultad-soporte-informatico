@@ -9,8 +9,8 @@ public class Cuatrimestre {
     private LinkedList<Materia> optativas;
 
     public Cuatrimestre() {
-        this.obligatorias = new LinkedList<Materia>();
-        this.optativas = new LinkedList<Materia>();
+        this.obligatorias = new LinkedList<>();
+        this.optativas = new LinkedList<>();
     }
 
     public void agregarMateria(Materia materia) {

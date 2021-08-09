@@ -6,6 +6,7 @@ import Modelo.Facultad;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Objects;
 
 public class FormularioAlumno extends JPanel {
 
@@ -36,18 +37,22 @@ public class FormularioAlumno extends JPanel {
                 int respuesta = JOptionPane.showConfirmDialog(panel, "Confirmar", "Confirmar creación de alumno", JOptionPane.YES_NO_OPTION,
                         JOptionPane.INFORMATION_MESSAGE);
                 switch (respuesta) {
-                    case 0:
-                        facultad.agregarAlumno(alumno);
-                        JOptionPane.showMessageDialog(panel, "Creado alumno: "+nombre+" "+apellido);
-                        listener.volver();
-                        break;
-                    case 1:
+                    case 0 -> {
+                        if(!Objects.equals(nombre, "") && !Objects.equals(apellido, "")) {
+                            facultad.agregarAlumno(alumno);
+                            JOptionPane.showMessageDialog(panel, "Creado alumno: " + nombre + " " + apellido);
+                            listener.volver();
+                        } else {
+                            JOptionPane.showMessageDialog(panel, "Debe poner nombre y apellido");
+                        }
+                    }
+                    case 1 -> {
                         JOptionPane.showMessageDialog(panel, "Cancelado");
                         listener.volver();
-                        break;
+                    }
                 }
                 cleanUp();
-                listener.volver();
+                //listener.volver();
             }
         });
     }

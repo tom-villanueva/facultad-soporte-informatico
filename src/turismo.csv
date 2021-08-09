@@ -1,0 +1,17 @@
+1,Contabilidad I,true,false,;
+1,Derecho Civil,true,false,;
+1,Procesamiento de Datos,true,true,;
+2,Economia I,true,false,;
+2,Matematica I,true,false,;
+2,Introduccion a la Filosofia,true,true,;
+3,Contabilidad II,true,false,Contabilidad I;Derecho Civil;Procesamiento de Datos
+3,Derecho Comercial I,true,true,Derecho Civil
+3,Administracion General,true,true,Procesamiento de Datos
+4,Economia II,true,false,Economia I
+4,Matematica II,true,false,Matematica I
+4,Logica y Metodologia de las Ciencias,true,true,Introduccion a la Filosofia
+5,Matematica Financiera,true,false,Matematica II;Matematica I
+5,Contabilidad de Costos Aplicados,true,false,Contabilidad II;Contabilidad I
+5,Tecnica y Practica Impositiva,true,true,Contabilidad II;Derecho Comercial I
+6,Derecho del Trabajo y Seguridad Social,true,true,Derecho Civil
+6,Seminario Taller Aplicado,true,false,Tecnica y Practica Impositiva;Contabilidad I;Contabilidad II;Derecho Civil;Derecho Comercial;Procesamiento de Datos;Administracion General;Economia I;Economia II;Matematica I;Matematica II;Introduccion a la Filosofia;Logica y Metodologia de las Ciencias

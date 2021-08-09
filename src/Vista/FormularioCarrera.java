@@ -119,6 +119,8 @@ public class FormularioCarrera extends JPanel implements ProgressListener{
     private void cleanUp() {
         carrera = new Carrera();
         nombreField.setText("");
+        cantidadOptativasField.setValue(null);
+        cantidadOptativasField.setEnabled(false);
     }
 
     @Override

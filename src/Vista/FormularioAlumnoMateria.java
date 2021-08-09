@@ -29,6 +29,9 @@ public class FormularioAlumnoMateria extends JPanel {
     private DefaultComboBoxModel<Alumno> alumnoModel;
     private DefaultComboBoxModel<Materia> materiaModel;
 
+    private JTable alumnoTable;
+    private DefaultTableModel alumnoTableModel;
+
     private JButton aceptarButton;
 
     private Facultad facultad;
@@ -48,6 +51,35 @@ public class FormularioAlumnoMateria extends JPanel {
 
         panel.add(panelComboBox, BorderLayout.PAGE_START);
         panel.add(panelFormulario, BorderLayout.CENTER);
+    }
+
+    private void setTamanoColumnas(JTable table) {
+        int filasVisibles = 10;
+        int cols = table.getColumnModel().getTotalColumnWidth();
+        int rows = table.getRowHeight() * filasVisibles;
+        Dimension d = new Dimension( cols, rows );
+        table.setPreferredScrollableViewportSize( d );
+    }
+
+    private void crearColumnasAlumnoTable() {
+        alumnoTableModel = (DefaultTableModel) alumnoTable.getModel();
+
+        alumnoTableModel.addColumn("N° Cuatri");
+        alumnoTableModel.addColumn("Materia");
+        alumnoTableModel.addColumn("Nota cursada");
+        alumnoTableModel.addColumn("Nota final");
+        alumnoTableModel.addColumn("Estado");
+
+        setTamanoColumnas(alumnoTable);
+    }
+
+    private void popularAlumnoTable(Integer num, Materia materia, int notaC, int notaF, EstadoCursada estado) {
+        String[] rowData = {num.toString(), materia.toString(), String.valueOf(notaC), String.valueOf(notaF), estado.name()};
+        alumnoTableModel.addRow(rowData);
+    }
+
+    private void cleanUpTable(DefaultTableModel model) {
+        model.setRowCount(0);
     }
 
     private void initCarreraComboBoxModel() {
@@ -95,6 +127,7 @@ public class FormularioAlumnoMateria extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 carreraSeleccionada = (Carrera) carreraComboBox.getSelectedItem();
                 cargarAlumnosComboBoxModel();
+                cleanUpTable(alumnoTableModel);
             }
         });
 
@@ -105,6 +138,17 @@ public class FormularioAlumnoMateria extends JPanel {
                 if(alumnoSeleccionado != null) {
                     alumnoSeleccionadoLabel.setText(alumnoSeleccionado.toString());
                     cargarMateriasComboBoxModel();
+
+                    cleanUpTable(alumnoTableModel);
+                    for(Cursada cursada : alumnoSeleccionado.getCursadas()) {
+                        popularAlumnoTable(
+                                cursada.getMateria().getNumeroCuatrimestre(),
+                                cursada.getMateria(),
+                                cursada.getNotaParcial(),
+                                cursada.getNotaFinal(),
+                                cursada.getEstado()
+                                );
+                    }
                 }
             }
         });
@@ -123,10 +167,15 @@ public class FormularioAlumnoMateria extends JPanel {
         materiaModel = new DefaultComboBoxModel<>();
         materiaComboBox.setModel(materiaModel);
 
+        alumnoTable = new JTable();
+        crearColumnasAlumnoTable();
+        JScrollPane scrollPane = new JScrollPane(alumnoTable);
+
         aceptarButton = new JButton("inscribir");
 
         panelStart.add(alumnoLabel);
         panelStart.add(alumnoSeleccionadoLabel);
+        panelStart.add(scrollPane);
 
         panelCenter.add(materiasLabel);
         panelCenter.add(materiaComboBox);
@@ -179,6 +228,7 @@ public class FormularioAlumnoMateria extends JPanel {
         alumnoComboBox.removeAll();
         materiaComboBox.removeAll();
         alumnoSeleccionadoLabel.setText("");
+        cleanUpTable(alumnoTableModel);
     }
 
 }

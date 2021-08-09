@@ -50,6 +50,17 @@ public class Alumno {
         return res;
     }
 
+    public LinkedList<Materia> getMateriasEnCurso() {
+        LinkedList<Materia> res = new LinkedList<>();
+
+        for (Cursada cursada : cursadas) {
+            if(cursada.getEstado() == EstadoCursada.EN_CURSO) {
+                res.add(cursada.getMateria());
+            }
+        }
+        return res;
+    }
+
     //getters y setters
 
     public Carrera getCarrera() {

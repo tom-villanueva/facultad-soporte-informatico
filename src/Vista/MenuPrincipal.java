@@ -14,6 +14,7 @@ public class MenuPrincipal implements Runnable, ProgressListener{
     private JButton inscribirAlumnoACarreraButton;
     private JButton inscribirAlumnoAMateriaButton;
     private JButton verTerminacionDeCarreraButton;
+    private JButton menuPrincipalButton;
     private JPanel mainPanel;
     private JPanel panelBotones;
     private JFrame frame;
@@ -30,7 +31,7 @@ public class MenuPrincipal implements Runnable, ProgressListener{
 
     public MenuPrincipal(Facultad facultad) {
 
-        frame = new JFrame("MenuPrincipal");
+        frame = new JFrame("Sistema de soporte informático");
         this.facultad = facultad;
 
         panelBotones = new JPanel();
@@ -58,11 +59,12 @@ public class MenuPrincipal implements Runnable, ProgressListener{
     }
 
     private void instanciarBotones() {
-        this.agregarCarreraButton = new JButton("Agregar Carrera");
-        this.agregarAlumnoButton = new JButton("Agregar Alumno");
-        this.inscribirAlumnoACarreraButton = new JButton("Inscribir Alumno a Carrera");
-        this.inscribirAlumnoAMateriaButton = new JButton("Inscribir Alumno a Materia");
-        this.verTerminacionDeCarreraButton = new JButton("Ver terminación de Carrera");
+        agregarCarreraButton = new JButton("Alta Carrera");
+        agregarAlumnoButton = new JButton("Alta Alumno");
+        inscribirAlumnoACarreraButton = new JButton("Inscribir Alumno a Carrera");
+        inscribirAlumnoAMateriaButton = new JButton("Inscribir Alumno a Materia");
+        verTerminacionDeCarreraButton = new JButton("Ver terminación de Carrera");
+        menuPrincipalButton = new JButton("Menú Principal");
 
         agregarAlumnoButton.addActionListener(new ActionListener() {
             @Override
@@ -102,6 +104,13 @@ public class MenuPrincipal implements Runnable, ProgressListener{
                 carta.show(panelContenedor, "FormularioTerminacion");
             }
         });
+
+        menuPrincipalButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                volver();
+            }
+        });
     }
 
     @Override
@@ -119,6 +128,7 @@ public class MenuPrincipal implements Runnable, ProgressListener{
         panelBotones.add(inscribirAlumnoACarreraButton);
         panelBotones.add(inscribirAlumnoAMateriaButton);
         panelBotones.add(verTerminacionDeCarreraButton);
+        panelBotones.add(menuPrincipalButton);
         mainPanel.add(panelBotones, BorderLayout.PAGE_START);
         mainPanel.add(panelContenedor, BorderLayout.CENTER);
 
@@ -134,7 +144,4 @@ public class MenuPrincipal implements Runnable, ProgressListener{
         SwingUtilities.invokeLater(this);
     }
 
-    //public static void main(String[] args) {
-    //    new MenuPrincipal().go();
-    //}
 }

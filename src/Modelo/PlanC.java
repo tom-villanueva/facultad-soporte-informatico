@@ -6,6 +6,10 @@ import java.util.*;
 public class PlanC extends TipoDePlan{
     @Override
     public LinkedList<Materia> verMaterias(Alumno alumno, PlanDeEstudio plan) {
+        LinkedList<Materia> noCursables = alumno.getMateriasCursadaAprobada();
+        noCursables.addAll(alumno.getMateriasAprobadas());
+        noCursables.addAll(alumno.getMateriasEnCurso());
+
         LinkedList<Materia> cursadas = alumno.getMateriasCursadaAprobada();
         cursadas.addAll(alumno.getMateriasAprobadas());
 
@@ -18,7 +22,7 @@ public class PlanC extends TipoDePlan{
         for (Materia materia : materias) {
 
             //si la materia no está aprobada
-            if(!(cursadas.contains(materia))) {
+            if(!(noCursables.contains(materia))) {
                 correlativas = materia.getCorrelativas();
 
                 //Si la materia no tiene correlativas las agrego para luego verificar
@@ -42,7 +46,7 @@ public class PlanC extends TipoDePlan{
          * se tienen que haber aprobado los finales de TODAS las materias de 5
          * cuatrimestres previos.
          **/
-
+        cursadas = alumno.getMateriasAprobadas();
         for(Materia materia : sinCorrelativas) {
 
             int desde = materia.getNumeroCuatrimestre() - 5;
@@ -52,7 +56,7 @@ public class PlanC extends TipoDePlan{
                 desde = 1;
             }
 
-            SortedMap<Integer, Cuatrimestre> cuatrisAnteriores = plan.obtenerCuatrimestresRango(desde, hasta);
+            SortedMap<Integer, Cuatrimestre> cuatrisAnteriores = plan.obtenerCuatrimestresRango(desde, hasta, false);
             LinkedList<Materia> materiasAnteriores = getMateriasCuatrimestres(cuatrisAnteriores);
 
             Set<Materia> interseccion = getInterseccion(materiasAnteriores, cursadas);

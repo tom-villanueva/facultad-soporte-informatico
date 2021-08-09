@@ -261,8 +261,6 @@ public class FormularioMateria extends JPanel {
                 switch (respuesta) {
                     case 0 -> {
                         Materia correlativa = (Materia) correlativaComboBox.getSelectedItem();
-                        System.out.println(correlativa);
-                        System.out.println(correlativasActual.contains(correlativa));
                         if (correlativa != null && !correlativasActual.contains(correlativa)) {
                             correlativasActual.add(correlativa);
                             popularCorrelativaTable(correlativa.getNumeroCuatrimestre(), correlativa);
@@ -296,7 +294,6 @@ public class FormularioMateria extends JPanel {
                             cleanUpTable(materiaTableModel);
                             cleanUpTable(correlativaTableModel);
                             correlativasActual.clear();
-                            System.out.println(cuatrimestreActual);
                             listener.volver();
                         } else {
                             JOptionPane.showMessageDialog(panel, "No hay materias para el cuatrimestre");
