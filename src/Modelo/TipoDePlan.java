@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
 
-public class TipoDePlan {
+public abstract class TipoDePlan {
 
     /*
      * Construye un conjunto interseccion copiado de las correlativas
